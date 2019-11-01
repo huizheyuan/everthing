@@ -1,5 +1,5 @@
 <template>
-    <div class="index">
+    <div class="social">
         <div class="content">
             <router-link to="/res">一夜暴富真的是一件好事吗？</router-link>
             <p class="abstract">一夜暴富真的是一件好事吗？一夜暴富真的是一件好事吗？一夜暴富真的是一件好事吗？一夜暴富真的是一件好事吗？...</p>

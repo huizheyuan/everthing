@@ -1,27 +1,28 @@
+import router from '../../../server/routers/user';
 <template>
     <div class="setting">
         <Tabs :animated="false" value="name1">
             <TabPane label="修改密码" name="name1">
                 <div class="modifyPwdBox" v-if="steps==1">
                     <p v-if="choice==1">
-                        <Form :model="formItem" label-position="right" :rules="formValidate" :label-width="80">
+                        <Form :model="opwdForm" label-position="right" :rules="formValidate" :label-width="80">
                             <FormItem label="原始密码" prop="passwd">
-                                <Input style="width: 81%" type="password" v-model="formItem.passwd" placeholder="请输入密码"></Input>
+                                <Input style="width: 81%" type="password" v-model="opwdForm.passwd" placeholder="请输入密码"></Input>
                             </FormItem>
                             <FormItem>
-                                <Button class="btns" style="width: 40%" @click="modifyPwd(formItem.passwd)" long>下一步</Button>
+                                <Button class="btns" style="width: 40%" @click="modifyPwd(opwdForm.passwd)" long>下一步</Button>
                                 <a @click="choice=2">用手机验证</a>
                             </FormItem>
                         </Form>
                     </p>
                     <p v-else-if="choice==2">
-                        <Form ref="modifyPwd2" :model="formItem" label-position="right" :rules="formValidate" :label-width="80">
+                        <Form ref="modifyPwd2" :model="telForm" label-position="right" :rules="formValidate" :label-width="80">
                             <FormItem label="手机号" prop="modifyTel">
-                                <Input style="width: 81%" v-model="formItem.modifyTel" placeholder="请输入手机号"></Input>
+                                <Input style="width: 81%" v-model="telForm.modifyTel" placeholder="请输入手机号"></Input>
                             </FormItem>
                             <FormItem label="验证码" prop="modifyCode">
-                                <Input style="width: 40%" type="text" v-model="formItem.modifyCode"></Input>
-                                <Button @click="telSendCode(formItem.modifyTel)">发送验证码</Button>
+                                <Input style="width: 40%" type="text" v-model="telForm.modifyCode"></Input>
+                                <Button @click="telSendCode(telForm.modifyTel)">发送验证码</Button>
                             </FormItem>
                             <FormItem>
                                 <Button class="btns" style="width: 40%" @click="verifyTel('modifyPwd2')" long>下一步</Button>
@@ -31,12 +32,12 @@
                     </p>
                 </div>
                 <div class="modifyPwdBox" v-else-if="steps=2">
-                    <Form ref="modifyPwdFinish" :model="formItem" label-position="right" :rules="formValidate" :label-width="80">
+                    <Form ref="modifyPwdFinish" :model="newForm" label-position="right" :rules="formValidate" :label-width="80">
                         <FormItem label="密码" prop="newPwd">
-                            <Input style="width: 81%" type="password" v-model="formItem.newPwd" placeholder="请输入6-8位数字或字母"></Input>
+                            <Input style="width: 81%" type="password" v-model="newForm.newPwd" placeholder="请输入6-8位数字或字母"></Input>
                         </FormItem>
                         <FormItem label="确认密码" prop="newPwdCheck">
-                            <Input style="width: 81%" type="password" v-model="formItem.newPwdCheck" placeholder="确认密码"></Input>
+                            <Input style="width: 81%" type="password" v-model="newForm.newPwdCheck" placeholder="确认密码"></Input>
                         </FormItem>
                         <FormItem>
                             <Button class="btns" style="width: 40%" @click="steps=1">上一步</Button>
@@ -65,6 +66,7 @@
 </template>
 
 <script scope>
+import {SERVER} from '@/config';
 export default {
     name: 'Setting',
     data () {
@@ -102,13 +104,17 @@ export default {
             }
         };
         return {
-            formItem: {
-                // 用原密码验证
-                passwd: '',
-                // 用手机号验证
+            opwdForm: {
+                uid: '',
+                passwd: ''
+            },
+            telForm: {
+                uid: '',
                 modifyTel: '',
-                modifyCode: '',
-                // 新密码
+                modifyCode: ''
+            },
+            newForm: {
+                uid: '',
                 newPwd: ''
             },
             formValidate: {
@@ -127,6 +133,9 @@ export default {
             steps: 1,
             choice: 1
         }
+    },
+    mounted() {
+        // 获取uid
     },
     methods: {
         // 验证原始密码
@@ -170,7 +179,23 @@ export default {
         },
         // 注销账号
         cancelAccount(){
-            alert("注销账号");
+            if(confirm("确定要注销账号吗？")){
+                this.$axios({
+                    url: SERVER + 'user/cancel',
+                    method: 'post',
+                    data: $qs.stringify( {uid: this.newForm.uid} )
+                }).then(res => {
+                    if(res.data.code==0){
+                        alert(res.data.msg);
+                        sessionStorage.removeItem('user');
+                        this.$router.push({path: '/main'});
+                    }else if(res.data.code==1){
+                        alert(res.data.msg);
+                    }
+                }).catch(err => {
+                    console.log('出错了', err);
+                });
+            }
         }
     }
 }

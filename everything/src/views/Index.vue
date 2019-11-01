@@ -5,8 +5,8 @@
             <Row type="flex" justify="space-around" class="code-row-bg">
                 <Col span="4"><router-link to='/main'>热门论题</router-link></Col>
                 <!-- 判断是否登录 -->
-                <Col span="4"><router-link to='/'>发表辩题</router-link></Col>
-                <Col span="4"><router-link to='/'>参与辩论</router-link></Col>
+                <Col span="6"><router-link to='/log'>登录-参与辩论</router-link></Col>
+                <Col span="4"><router-link to='/'>关于我~</router-link></Col>
             </Row>
         </div>
         <ul id="tags">
@@ -102,7 +102,7 @@ img:hover{
 }
 .title a:hover{
     color: #008cf4;
-    font-size: 18px;
+    font-size: 17px;
 }
 ul a{
     position: absolute;

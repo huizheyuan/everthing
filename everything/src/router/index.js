@@ -7,7 +7,7 @@ import Main from '@/views/Main'
 import Mine from '@/views/Mine'
 import Res from '@/views/Res'
 
-import Reg from '@/views/Reg'
+import Log from '@/views/log'
 
 Vue.use(Router)
 
@@ -60,9 +60,22 @@ export default new Router({
       component: Res
     },
     {
-      path: '/reg',
-      name: 'Reg',
-      component: Reg
+      path: '/log',
+      name: 'log',
+      component: Log,
+      redirect: '/log/loginform',
+      children: [
+        {
+          path: 'loginform',
+          name: 'Loginform',
+          component: () => import('@/components/loginform')
+        },
+        {
+          path: 'regform',
+          name: 'Regform',
+          component: () => import('@/components/regform')
+        }
+      ]
     }
   ]
 })

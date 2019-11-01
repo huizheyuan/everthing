@@ -22,16 +22,16 @@
                 <!-- 手机号 -->
                 <Panel name="1" hide-arrow>
                     <Tooltip placement="right" content="点击更换手机号">
-                        <Button style="border: none; font-size: 14px;font-weight: 700;">手机号：18740570591</Button>
+                        <Button style="border: none; font-size: 14px;font-weight: 700;">手机号：{{telItem.tel}}</Button>
                     </Tooltip>
                     <div slot="content" class="formData">
-                        <Form ref="formTel" :model="formItem" :rules="formValidate">
+                        <Form ref="formTel" :model="telItem" :rules="formValidate">
                             <FormItem label="手机号" prop="tel">
-                                <Input style="width: 85%" v-model="formItem.tel" placeholder="请输入手机号"></Input>
+                                <Input style="width: 85%" v-model="telItem.tel" placeholder="请输入手机号"></Input>
                             </FormItem>
                             <FormItem label="验证码" prop="code">
-                                <Input style="float: left;width: 40%; margin-right: 10px" type="text" v-model="formItem.code"></Input>
-                                <Button @click="sendCode(formItem.tel)">发送验证码</Button>
+                                <Input style="float: left;width: 40%; margin-right: 10px" type="text" v-model="telItem.code"></Input>
+                                <Button @click="sendCode(telItem.tel)">发送验证码</Button>
                             </FormItem>
                             <FormItem>
                                 <Button @click="modifyTel('formTel')" long>确定</Button>
@@ -45,13 +45,13 @@
                         <Button style="border: none; font-size: 14px;font-weight: 700;">绑定邮箱</Button>
                     </Tooltip>
                     <div slot="content" class="formData">
-                        <Form ref="formMail" :model="formItem" :rules="formValidate">
+                        <Form ref="formMail" :model="mailItem" :rules="formValidate">
                             <FormItem label="邮箱" prop="mail">&nbsp;&nbsp;&nbsp;
-                                <Input style="width: 85%" v-model="formItem.mail" placeholder="请输入邮箱"></Input>
+                                <Input style="width: 85%" v-model="mailItem.mail" placeholder="请输入邮箱"></Input>
                             </FormItem>
                             <FormItem label="验证码"  prop="mailCode">
-                                <Input style="float: left;width: 40%; margin-right: 10px" type="text" v-model="formItem.mailCode"></Input>
-                                <Button @click="sendCode(formItem.mail)">发送验证码</Button>
+                                <Input style="float: left;width: 40%; margin-right: 10px" type="text" v-model="mailItem.mailCode"></Input>
+                                <Button @click="sendCode(mailItem.mail)">发送验证码</Button>
                             </FormItem>
                             <FormItem>
                                 <Button @click="modifyMail('formMail')" long>确定</Button>
@@ -68,6 +68,7 @@
 </template>
 
 <script scope>
+import {SERVER} from '@/config';
 export default {
     name: 'Personal',
     data () {
@@ -85,14 +86,19 @@ export default {
         };
         return {
             formItem: {
+                uid: '',
                 photo: '',
                 nickname: '',
                 signature: '',
-                sex: 'secret',
-                // 更换手机号
+                sex: 'secret'
+            },
+            telItem: {
+                uid: '',
                 tel: '',
                 code: '',
-                // 绑定邮箱
+            },
+            mailItem: {
+                uid: '',
                 mail: '',
                 mailCode: ''
             },
@@ -112,7 +118,14 @@ export default {
                     { required: true, message: '请填写验证码', trigger: 'blur' }
                 ]
             },
+            userInfo: {}
         }
+    },
+    mounted() {
+        bus.$on('loginInfo',res=>{
+            this.telItem.tel=res.tel;
+            console.log(this.userInfo);
+        })
     },
     methods: {
         // 个人资料---发送验证码
@@ -130,7 +143,21 @@ export default {
         modifyTel(telVal) {
             this.$refs[telVal].validate((valid) => {
                 if (valid) {
-                    alert("更换绑定的手机号");
+                    let mForm = this.$refs[telVal].model;
+                    
+                    this.$axios({
+                        url: SERVER + 'user/handleTel',
+                        method: 'post',
+                        data: $qs.stringify( mForm )
+                    }).then(res => {
+                        if(res.data.code==0){
+                            alert(res.data.msg);
+                        }else if(res.data.code==1){
+                            alert(res.data.msg);
+                        }
+                    }).catch(err => {
+                        console.log('出错了', err);
+                    });
                 } else {
                     alert("填写信息有误");
                 }

@@ -1,3 +1,4 @@
+import router from '../../../server/routers/user';
 <template>
     <div class="res">
         <section class="bg">
@@ -15,7 +16,9 @@
                 </Col>
             </Row>
             <div v-if="login==0" class="publish">
-                <Button shape="circle" style="margin: 8px 24px; width: 100px;height: 40px" class="btns">立即登录</Button>
+                <router-link to="/log">
+                    <Button shape="circle" style="margin: 8px 24px; width: 100px;height: 40px" class="btns">立即登录</Button>
+                </router-link>
                 <p style="margin: 8px 24px; font-size: 14px; color: #00b7a3">&nbsp;登录后就可以参与讨论啦~</p>
             </div>
             <Form v-else class="publish" ref="formValidate" label-position="top" :model="formValidate" :rules="ruleValidate" :label-width="80">
@@ -63,7 +66,7 @@ export default {
     name: 'Res',
     data() {
         return {
-            login: 1,//1：登录；0：未登录
+            login: 0,//1：登录；0：未登录
             formValidate: {
                 arg1: '',
                 arg2: '',
@@ -82,6 +85,13 @@ export default {
                     { type: 'string', message: 'Incorrect email format', trigger: 'blur' }
                 ]
             }
+        }
+    },
+    beforeMount() {
+        if (sessionStorage.getItem('user')){
+            this.login=1;
+        }else{
+            this.login=0;
         }
     },
     methods: {
