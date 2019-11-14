@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <Form style="padding: 20px 0 0;" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+    <div class="log-reg">
+        <h1>注册</h1>
+        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
             <FormItem label="手机号" prop="tel">
                 <Input v-model="formValidate.tel" placeholder="请输入手机号"></Input>
             </FormItem>
@@ -16,13 +17,14 @@
             </FormItem>
             <FormItem>
                 <Button class="btns" @click="reg('formValidate')" long>注册</Button>
+                <router-link to="/login" class="gogogo">已有账号，去登录~</router-link>
             </FormItem>
         </Form>
     </div>
 </template>
 
 <script>
-import {SERVER} from '@/config';
+import { userReg } from '@/libs/user'
 export default {
     name: 'regform',
     data () {
@@ -94,16 +96,10 @@ export default {
             this.$refs[regVal].validate((valid) => {
                 if (valid) {
                     let mForm = this.$refs[regVal].model;
-
-                    this.$axios({
-                        url: SERVER + 'user/reg',
-                        method: 'post',
-                        data: $qs.stringify( mForm )
-                    }).then(res => {
+                    userReg(mForm).then(res => {
                         if(res.data.code==0){
                             alert(res.data.msg);
-                            bus.$emit('reg-tel', res.data.uid.tel);// 注册成功的号码
-                            this.$router.push({path: '/log/loginform'});
+                            this.$router.push({name: 'login', query: {tel: res.data.tel}});
                             this.$refs[regVal].resetFields();
                         }else if(res.data.code==1){
                             alert(res.data.msg);
@@ -117,6 +113,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-</style>

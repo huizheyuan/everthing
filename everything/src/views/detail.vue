@@ -1,4 +1,3 @@
-import router from '../../../server/routers/user';
 <template>
     <div class="res">
         <section class="bg">
@@ -15,7 +14,7 @@ import router from '../../../server/routers/user';
                     <p style="font-size: 16px; color: blue; font-weight: bold; text-align: center">社会安定主要靠道德维持</p>
                 </Col>
             </Row>
-            <div v-if="login==0" class="publish">
+            <div v-if="!token" class="publish">
                 <router-link to="/log">
                     <Button shape="circle" style="margin: 8px 24px; width: 100px;height: 40px" class="btns">立即登录</Button>
                 </router-link>
@@ -62,11 +61,13 @@ import router from '../../../server/routers/user';
 </template>
 
 <script>
+import { getToken } from '../libs/user'
+import {SERVER} from '@/config';
 export default {
-    name: 'Res',
+    name: 'detail',
     data() {
         return {
-            login: 0,//1：登录；0：未登录
+            token: getToken(),
             formValidate: {
                 arg1: '',
                 arg2: '',
@@ -87,20 +88,23 @@ export default {
             }
         }
     },
-    beforeMount() {
-        if (sessionStorage.getItem('user')){
-            this.login=1;
-        }else{
-            this.login=0;
-        }
-    },
     methods: {
-        handleSubmit (name) {
-            this.$refs[name].validate((valid) => {
+        handleSubmit (params) {
+            this.$refs[params].validate((valid) => {
                 if (valid) {
-                    this.$Message.success('Success!');
+                    // 发表观点
+                    let mForm = this.$refs[params].model;
+                    this.$axios({
+                        // url: SERVER + 'user/publish',
+                        method: 'post',
+                        data: $qs.stringify(mForm)
+                    }).then(res => {
+                        this.$Message.success('发表成功!');
+                    }).catch(err => {
+                        console.log(err);
+                    })
                 } else {
-                    this.$Message.error('Fail!');
+                    this.$Message.error('有必填项未填');
                 }
             })
         },

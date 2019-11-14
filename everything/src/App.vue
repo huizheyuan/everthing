@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="$route.path=='/'">
+    <div v-if=" $route.path=='/' || $route.path=='/login' || $route.path=='/reg' ">
       <router-view/>
     </div>
     <div v-else>
@@ -11,55 +11,33 @@
 </template>
 
 <script>
-import Head from '@/components/Head'
+import Head from '@/components/head'
+import { getToken, getUserInfo } from '@/libs/user'
 export default {
   name: 'App',
-  components: {
-    Head,
+  provide() {
+    return {
+      app : this
+    }
   },
+  data() {
+    return {
+      userInfo: localStorage.user
+    }
+  },
+  components: { Head },
+  created() {
+    getUserInfo(getToken()).then(res=>{
+      localStorage.user = JSON.stringify(res.data.userInfo);
+      this.userInfo = res.data.userInfo;
+    })
+  }
 }
 </script>
 
 <style>
 body{
   overflow-x: hidden;
-  overflow-y: scroll;
-}
-</style>
-<style>
-.ivu-form-item{
-    margin: 18px 0;
-}
-.ivu-collapse>.ivu-collapse-item{
-    padding: 20px 0;
-}
-.ivu-collapse>div:last-child{
-    padding-top: 20px;
-}
-/*账号设置*/
-.ivu-tabs-tab{
-    font-size: 16px;
-    color: #db6f6a;
-    border-color: #db6f6a!important;
-}
-.ivu-tabs-nav .ivu-tabs-tab:hover{
-    color: #db6f6a;
-}
-.ivu-tabs-nav-container:focus .ivu-tabs-tab-focused {
-    border-color: #db6f6a!important;
-}
-.ivu-tabs-nav .ivu-tabs-tab-active {
-    color: #db6f6a;
-}
-.ivu-tabs-nav .ivu-tabs-tab:active {
-    color: #db6f6a;
-}
-.ivu-tabs-ink-bar{
-    background-color: #db6f6a;
-}
-/* 记住密码 */
-.ivu-switch-checked {
-    border-color: #db6f6a;
-    background-color: #db6f6a;
+  overflow-y: hidden;
 }
 </style>

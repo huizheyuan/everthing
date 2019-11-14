@@ -6,7 +6,7 @@
                 <Button class="btns">更换头像</Button>
             </FormItem><hr/>
             <FormItem label="昵称">
-                <Input v-model="formItem.nickname" style="width: 200px;" placeholder="请输入昵称"></Input>
+                <Input :value="app.userInfo.nickname" v-model="formItem.nickname" style="width: 200px;" placeholder="请输入昵称">{{nickname}}</Input>
             </FormItem><hr/>
             <FormItem label="个性签名">
                 <Input v-model="formItem.signature" type="textarea" :autosize="{minRows: 3,maxRows: 4}" placeholder="来个个签吧~"></Input>
@@ -68,9 +68,11 @@
 </template>
 
 <script scope>
+import { mapActions, mapMutations } from 'vuex';
 import {SERVER} from '@/config';
 export default {
     name: 'Personal',
+    inject: ['app'],
     data () {
         const validateTel = (rule, value, callback) => {
             if (value) {
@@ -121,13 +123,18 @@ export default {
             userInfo: {}
         }
     },
-    mounted() {
-        bus.$on('loginInfo',res=>{
-            this.telItem.tel=res.tel;
-            console.log(this.userInfo);
-        })
+    computed: {
+        nickname () {
+            return this.$store.state.nickname
+        },
     },
     methods: {
+        ...mapMutations([
+            'setPhoto', 'setNickname', 'setSignature',
+            'setSex', 'setTel', 'setMail',
+            'setParticipation', 'setFootprint', 'setFocus'
+        ]),
+        ...mapActions(['getUserInfo']),
         // 个人资料---发送验证码
         sendCode(valNum){
             var tel=/^[1][3,4,5,7,8][0-9]{9}$/;

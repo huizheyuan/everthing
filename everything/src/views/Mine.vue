@@ -16,7 +16,7 @@
 
 <script>
 export default {
-    name: 'Mine',
+    name: 'mine',
     data () {
         return {
             active:'个人资料',

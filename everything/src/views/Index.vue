@@ -25,7 +25,7 @@
 
 <script scope>
 export default {
-    name: 'Index',
+    name: 'index',
     beforeCreate() {
         setInterval(() => {
             this.animate()

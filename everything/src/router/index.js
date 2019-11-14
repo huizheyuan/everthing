@@ -1,13 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Index from '@/views/Index'
-import Main from '@/views/Main'
-
-import Mine from '@/views/Mine'
-import Res from '@/views/Res'
-
-import Log from '@/views/log'
+import index from '@/views/index'
+import home from '@/views/home'
+import mine from '@/views/mine'
+import detail from '@/views/detail'
 
 Vue.use(Router)
 
@@ -15,14 +12,14 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Index',
-      component: Index
+      name: 'index',
+      component: index
     },
     {
-      path: '/main',
-      name: 'Main',
-      component: Main,
-      redirect: '/main/hot',
+      path: '/home',
+      name: 'home',
+      component: home,
+      redirect: '/home/hot',
       children: [
         {
           path: 'hot',
@@ -33,13 +30,23 @@ export default new Router({
           path: 'social',
           name: 'Social',
           component: () => import('@/components/Social')
+        },
+        {
+          path: 'emotion',
+          name: 'Emotion',
+          component: () => import('@/components/emotion')
+        },
+        {
+          path: 'other',
+          name: 'Other',
+          component: () => import('@/components/other')
         }
       ]
     },
     {
       path: '/mine',
-      name: 'Mine',
-      component: Mine,
+      name: 'mine',
+      component: mine,
       redirect: '/mine/personal',
       children: [
         {
@@ -55,27 +62,19 @@ export default new Router({
       ]
     },
     {
-      path: '/res',
-      name: 'Res',
-      component: Res
+      path: '/detail',
+      name: 'detail',
+      component: detail
     },
     {
-      path: '/log',
-      name: 'log',
-      component: Log,
-      redirect: '/log/loginform',
-      children: [
-        {
-          path: 'loginform',
-          name: 'Loginform',
-          component: () => import('@/components/loginform')
-        },
-        {
-          path: 'regform',
-          name: 'Regform',
-          component: () => import('@/components/regform')
-        }
-      ]
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/login')
+    },
+    {
+      path: '/reg',
+      name: 'reg',
+      component: () => import('@/views/reg')
     }
   ]
 })

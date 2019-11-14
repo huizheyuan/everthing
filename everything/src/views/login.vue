@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <Form style="padding: 20px 0 0;" method="post" enctype="multipart/form-data" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+    <div class="log-reg">
+        <h1>登录</h1>
+        <Form method="post" enctype="multipart/form-data" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
             <FormItem label="手机号" prop="tel">
                 <Input v-model="formValidate.tel" placeholder="请输入手机号"></Input>
             </FormItem>
@@ -16,14 +17,14 @@
             </FormItem>
             <FormItem>
                 <Button class="btns" long @click="login('formValidate')">登录</Button>
+                <router-link to="/reg" class="gogogo">还没账号，去注册~</router-link>
             </FormItem>
         </Form>
     </div>
 </template>
 
 <script>
-import {mapActions} from 'vuex'
-import {SERVER} from '@/config';
+import { userLogin } from '@/libs/user'
 export default {
     name: 'loginform',
     data () {
@@ -53,7 +54,7 @@ export default {
         };
         return {
             formValidate: {
-                tel: '',// 登录
+                tel: this.$route.query.tel || '',
                 passwd: '',
                 switch: true
             },
@@ -67,16 +68,7 @@ export default {
             }
         }
     },
-    // beforeCreate() {
-    //     setTimeout(() => {
-    //         let that = this;
-    //         bus.$on('reg-tel', res=> {
-    //             that.formValidate.tel = res;
-    //         });
-    //     }, 100);
-    // },
     methods: {
-        ...mapActions(['getUserInfo']),
         sendCode(telVal){
             var tel=/^[1][3,4,5,7,8][0-9]{9}$/;
             if (!telVal){
@@ -84,7 +76,6 @@ export default {
             }else if (!tel.test(telVal)){
                 alert("手机号格式不正确");
             }else{
-                // 根据手机号 发送验证码
                 alert(telVal, "验证码");
             }
         },
@@ -92,15 +83,10 @@ export default {
             this.$refs[logVal].validate((valid) => {
                 if (valid) {
                     let mForm = this.$refs[logVal].model;
-                    let that = this;
-                    this.$axios({
-                        url: SERVER + 'user/login',
-                        method: 'post',
-                        data: $qs.stringify( mForm )
-                    }).then(res => {
+                    userLogin(mForm).then(res => {
                         if(res.data.code==0){
-                            this.getUserInfo(res.data.userInfo);
-                            bus.$emit('loginInfo', res.data.userInfo);
+                            localStorage.token=res.data.token;
+                            bus.$emit('token', res.data.token);
                             alert(res.data.msg);
                             this.$router.push({path: '/main'});
                             this.$refs[logVal].resetFields();
@@ -116,6 +102,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-</style>

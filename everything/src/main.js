@@ -1,39 +1,25 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
 
-import ViewUI from 'view-design';
-import 'view-design/dist/styles/iview.css';
-
 import $ from 'jquery'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
-import './assets/css/index.css';
+import ViewUI from 'view-design';
+import less from 'less'
+import './assets/style/index.less'
 
+// 数据通信
 import qs from 'qs'
 import axios from 'axios'
-
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios);
 Vue.prototype.$axios = axios
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 window.$qs = qs
-
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-// axios.defaults.withCredentials = true
-
-Vue.use(ViewUI, {
-  transfer: true,
-  capture: false,
-  select: {
-      arrow: 'md-arrow-dropdown',
-      arrowSize: 20
-  }
-});
-
-window.bus = new Vue();
+window.bus = new Vue()
+Vue.use(ViewUI)
+Vue.use(less)
 Vue.config.productionTip = false;
-
 
 /* eslint-disable no-new */
 new Vue({

@@ -17,11 +17,18 @@
       <FormItem label="反方" prop="b_side">
         <Input class="full" v-model="topicData.b_side" placeholder="反方辩题"></Input>
       </FormItem>
+      <FormItem label="分类" prop="select">
+        <Select v-model="topicData.select" placeholder="请输入分类" style="width: 150px">
+          <option v-for="item in catalogs" :key="item.id" :value="item.id">{{item.title}}</option>
+        </Select>
+      </FormItem>
+      <!-- <p v-for="item in catalogs" :key="item.id" :value="item.id">{{item.title}}</p> -->
     </Form>
   </div>
 </template>
 
 <script>
+import {SERVER} from '@/config';
 export default {
   name: 'topic',
   data () {
@@ -30,32 +37,20 @@ export default {
           topic: '',
           a_side: '',
           b_side: '',
+          select: ''
       },
       topicValidate: {
-        topic: [
-          {
-            required: true,
-            message: '辩题不能为空',
-            trigger: 'blur'
-          }
-        ],
-        a_side: [
-          {
-            required: true,
-            message: '立场不能为空',
-            trigger: 'blur'
-          }
-        ],
-        b_side: [
-          {
-            required: true,
-            message: '立场不能为空',
-            trigger: 'blur'
-          }
-        ]
-      }
+        topic: [ { required: true, message: '辩题不能为空', trigger: 'blur' } ],
+        a_side: [ { required: true, message: '立场不能为空', trigger: 'blur' } ],
+        b_side: [ { required: true, message: '立场不能为空', trigger: 'blur' } ],
+        select: [ { required: true, message: '请选择分类', trigger: 'change' } ]
+      },
+      catalogs: []
     }
-  }
+  },
+  beforeCreate() {
+    this.$axios(SERVER + 'content/catalog').then(res => this.catalogs = res.data)
+  },
 }
 </script>
 

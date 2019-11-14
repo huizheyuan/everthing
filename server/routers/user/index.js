@@ -24,12 +24,11 @@ router.post('/login', async ctx=>{
       }else{
         token=guid().replace(/\-/g, '');
         token_expires=Math.floor((Date.now()+config.TOKEN_AGE)/1000);
-        await ctx.db.query('UPDATE user_table SET token=?, token_expires=?', [token, token_expires]);
+        await ctx.db.query('UPDATE user_table SET token=?, token_expires=? WHERE tel=?', [token, token_expires,tel]);
 
-        let info = await ctx.db.query('SELECT * FROM user_table where tel=?', [tel]);
         ctx.body={
           code: 0,
-          userInfo: info[0],
+          token,
           msg:'登录成功'
         };
       }
@@ -42,12 +41,16 @@ router.post('/login', async ctx=>{
 // 获取用户信息
 router.post('/getuser', async ctx=>{
   try {
-    let token = ctx.request.fields;
-    let info = await ctx.db.query('SELECT * FROM user_table where token=?', [token]);
+    let {token} = ctx.request.fields;    
+    let info = await ctx.db.query(
+      'SELECT uid,photo,nickname,signature,sex,tel,mail,participation,footprint,focus FROM user_table WHERE token=?', 
+      [token]
+    );
+    
     ctx.body={
-      code: 0, 
+      code: 0,
       userInfo: info[0],
-      msg:'获取成功'
+      msg:'获取成功~'
     };
   } catch (error) {
     ctx.body={code: 1, msg: error};
@@ -55,10 +58,10 @@ router.post('/getuser', async ctx=>{
 })
 
 // 退出登录
-router.post('/logout', async ctx=>{
+router.post('/logout', async ctx=>{  
   try {
-    let token = ctx.request.fields;
-    // let info = await ctx.db.query('UPDATE user_table SET tel=? WHERE uid=?', [token, uid]);
+    let {token} = ctx.request.fields;
+    await ctx.db.query('UPDATE user_table SET token=?, token_expires=? WHERE token=?', ['', 0, token]);
     ctx.body={
       code: 0,
       msg:'已退出'

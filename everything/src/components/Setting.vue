@@ -1,4 +1,3 @@
-import router from '../../../server/routers/user';
 <template>
     <div class="setting">
         <Tabs :animated="false" value="name1">

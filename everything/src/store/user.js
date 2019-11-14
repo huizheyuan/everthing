@@ -1,4 +1,4 @@
-import { setToken, getToken } from '@/libs/util'
+import { getUserInfo, getToken } from '../libs/user'
 
 export default {
   state: {
@@ -9,11 +9,10 @@ export default {
     sex: '',
     tel: '',
     mail: '',
-    passwd: '',
     participation: '',
     footprint: '',
     focus: '',
-    token: getToken()
+    token: getToken(),
   },
   mutations: {
     setUid (state, id) { state.uid = id },
@@ -23,39 +22,52 @@ export default {
     setSex (state, sex) { state.sex = sex },
     setTel (state, tel) { state.tel = tel },
     setMail (state, mail) { state.mail = mail },
-    setPasswd (state, passwd) { state.passwd = passwd },
     setParticipation (state, participation) { state.participation = participation },
     setFootprint (state, footprint) { state.footprint = footprint },
     setFocus (state, focus) { state.focus = focus },
-    setToken (state, token) {
-      state.token = token
-      setToken(token)
-    },
   },
   actions: {
-    getUserInfo ({ commit }, res) {
-      commit('setUid', res.uid)
-      commit('setPhoto', res.photo)
-      commit('setNickname', res.nickname)
-      commit('setSignature', res.signature)
-      commit('setSex', res.sex)
-      commit('setTel', res.tel)
-      commit('setMail', res.mail)
-      commit('setPasswd', res.passwd)
-      commit('setParticipation', res.participation)
-      commit('setFootprint', res.footprint)
-      commit('setFocus', res.focus)
-    },
-    handleLogOut ({ commit }, res) {
-      commit('setUid', undefined)
-      commit('setPhoto', '')
-      commit('setNickname', '')
-      commit('setTel', res.tel)
-      commit('setMail', res.mail)
-      commit('setParticipation', '')
-      commit('setFootprint', '')
-      commit('setFocus', '')
-      localStorage.token = ''
-    },
-  }
+    getUserInfo ({ commit }, token) {
+      getUserInfo(token).then(res => {
+        const data = res.data.userInfo;
+        commit('setUid', data.uid)
+        commit('setPhoto', data.photo)
+        commit('setNickname', data.nickname)
+        commit('setSignature', data.signature)
+        commit('setSex', data.sex)
+        commit('setTel', data.tel)
+        commit('setMail', data.mail)
+        commit('setParticipation', data.participation)
+        commit('setFootprint', data.footprint)
+        commit('setFocus', data.focus)
+      }).catch(err => {
+        console.log("error", err);   
+      })
+    }
+  },
+  // getters: {
+  //   headGetInfo(state){
+  //     return {
+  //       photo: state.photo, 
+  //       nickname: state.nickname
+  //     };
+  //   },
+  //   focusGetInfo(state){
+  //     return {
+  //       participation: state.participation,
+  //       footprint: state.footprint,
+  //       focus: state.focus
+  //     }
+  //   },
+  //   mineGetInfo(state){
+  //     return {
+  //       photo: state.photo,
+  //       nickname: state.nickname,
+  //       signature: state.signature,
+  //       sex: state.sex,
+  //       tel: state.tel,
+  //       mail: state.mail
+  //     }
+  //   }
+  // }
 }

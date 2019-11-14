@@ -1,30 +1,59 @@
 import $qs from 'qs'
 import {SERVER} from '@/config'
+import axios from 'axios'
 
-export const login = ({ tel, passwd }) => {
-  const data = {
-    tel: tel,
-    passwd
-  }
-  return this.$axios.request({
-    url: SERVER + '/user/login',
-    data: $qs.stringify(data),
-    method: 'post'
-  })
+//注册
+export const userReg = (mForm) => {
+    return axios({
+        url: SERVER + 'user/reg',
+        method: 'post',
+        data: $qs.stringify( mForm )
+    })
 }
-
-// export const getUserInfo = (token) => {
-//   return this.$axios.request({
-//     url: SERVER + '/user/getuser',
-//     method: 'post',
-//     data: $qs.stringify(token)
-//   })
-// }
-
-export const logout = (token) => {
-  return this.$axios.request({
-    url: SERVER + '/user/logout',
-    method: 'post',
-    data: $qs.stringify(token)
-  })
+//登录
+export const userLogin = (mForm) => {
+    return axios({
+        url: SERVER + 'user/login',
+        method: 'post',
+        data: $qs.stringify( mForm )
+    })
+}
+//token
+export const getToken = () => {
+    const token = localStorage.token  
+    if (token) return token
+    else return false
+}
+//退出
+export const quit = (token) => {
+    if (token){
+        let data={token: token};
+        return axios({
+            url: SERVER + 'user/logout',
+            method: 'post',
+            data: $qs.stringify(data)
+        })
+    }
+}
+//获取用户信息
+export const getUserInfo = (token) => {
+    if (token){
+        let data={token: token};  
+        return axios({
+            url: SERVER + 'user/getuser',
+            method: 'post',
+            data: $qs.stringify(data)
+        })
+    }
+}
+//注销账号
+export const cancelAccount = (token) => {
+    if (token){
+        let data={token: token};  
+        return axios({
+            url: SERVER + 'user/cancel',
+            method: 'post',
+            data: $qs.stringify(data)
+        })
+    }
 }

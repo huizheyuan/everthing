@@ -1,0 +1,161 @@
+验证用户身份：
+header组件、res页面、
+
+注册：
+	参数：电话tel、密码passwd、验证码code
+	返回：电话tel、跳转登录页面
+
+登录：
+	参数：电话tel、密码passwd、验证码code
+	返回：用户id、登录token
+
+获取用户信息：
+	参数：用户id
+	返回：用户信息（除了密码）
+
+退出登录：
+	参数：用户id
+
+
+
+
+state
+uid: '',
+photo: '',
+nickname: '',
+signature: '',
+sex: '',
+tel: '',
+mail: '',
+passwd: '',
+participation: '',
+footprint: '',
+focus: '',
+
+mutations
+setUid (state, id) { state.uid = id },
+setPhoto (state, photo) { state.photo = photo },
+setNickname (state, name) { state.nickname = name },
+setSignature (state, sig) { state.signature = sig },
+setSex (state, sex) { state.sex = sex },
+setTel (state, tel) { state.tel = tel },
+setMail (state, mail) { state.mail = mail },
+setPasswd (state, passwd) { state.passwd = passwd },
+setParticipation (state, participation) { state.participation = participation },
+setFootprint (state, footprint) { state.footprint = footprint },
+setFocus (state, focus) { state.focus = focus },
+
+
+action
+commit('setUid', data.uid)
+commit('setPhoto', data.photo)
+commit('setNickname', data.nickname)
+commit('setSignature', data.signature)
+commit('setSex', data.sex)
+commit('setTel', data.tel)
+commit('setMail', data.mail)
+commit('setPasswd', data.passwd)
+commit('setParticipation', data.participation)
+commit('setFootprint', data.footprint)
+commit('setFocus', data.focus)
+
+
+
+formatList (list) {
+      let arr = [{
+        id: 'bz',
+        label: '马鞍山百助网络科技有限公司',
+        children: []
+      }]
+      let obj = {}
+      list.forEach((item, index) => {
+        if (!obj[item.deptName]) {
+          obj[item.deptName] = {}
+          obj[item.deptName].label = item.deptName
+          obj[item.deptName].id = item.deptName
+          obj[item.deptName].children = []
+        }
+        obj[item.deptName].children.push({
+          id: item.id,
+          label: item.nickname
+        })
+      })
+      let keys = Object.keys(obj)
+      keys.forEach(key => {
+        console.log(key)
+        if (key !== 'undefined') {
+          if (key === '马鞍山百助网络科技有限公司') {
+            arr[0].children = [...obj[key].children, ...arr[0].children]
+          } else {
+            arr[0].children.push(obj[key])
+          }
+        }
+      })
+      // console.log(arr, 'arr')
+      return arr
+    },
+
+
+
+
+
+
+
+
+<Row :gutter="16">
+        <Col span="11">
+          <router-link to="/main"><Col span="7"><p class="nav">热点</p></Col></router-link>
+          <div v-if="token">
+            <router-link to="/"><Col span="7" v-if="token"><p class="nav">我的参与</p></Col></router-link>
+          </div>
+        </Col>
+        <Col span="2" style="text-align: center">
+          <router-link to='/'><img class="logo" src="../assets/img/logo-2.png" alt="LOGO"></router-link>
+        </Col>
+        <!-- <Col span="6">
+          <form action="/search" accept-charset="UTF-8" method="get">
+            <input type="text" class="form-control inp" @click="animate" @blur="noAnimate">
+          </form>
+        </Col> -->
+        <Col span="11">
+          <div v-if="token">
+            <router-link to="/"><Col span="7" v-if="token"><p class="nav">我的关注</p></Col></router-link>
+            <router-link to="/"><Col span="7" v-if="token"><p class="nav">我的足迹</p></Col></router-link>
+            <Dropdown style="margin-left: 20px">
+              <a href="javascript:void(0)">
+                <img class="user" :src="app.userInfo.photo" :alt="app.userInfo.nickname">
+              </a>
+              <DropdownMenu slot="list">
+                  <DropdownItem v-for="(item,index) in dropList" :key="`drop+${index}`">
+                    <router-link :to="item.name">
+                        <span v-html="item.svg"></span>
+                        <span>{{item.dropName}}</span>
+                    </router-link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <svg t="1571642837494" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7584" width="16" height="16"><path d="M511.991851 1023.982934c-282.320581 0-511.991381-229.679334-511.991382-511.991382 0-282.277915 229.670801-511.991381 511.991382-511.991381a510.813801 510.813801 0 0 1 344.271538 133.032427 42.640349 42.640349 0 0 1 2.901284 60.244319c-15.829067 17.493039-42.793946 18.730351-60.286985 2.901285A425.840298 425.840298 0 0 0 511.991851 85.332068c-235.26004 0-426.659485 191.399445-426.659485 426.659484 0 235.302706 191.399445 426.659485 426.659485 426.659485 105.982216 0 207.569839-39.082009 286.032518-110.078147a42.606216 42.606216 0 0 1 60.244319 2.986616 42.640349 42.640349 0 0 1-2.986616 60.244319c-94.163748 85.246565-216.103029 132.179108-343.290221 132.179109" p-id="7585" fill="#db6f6a"></path><path d="M885.975955 552.447404H341.328057c-23.466272 0-42.665948-19.199677-42.665948-42.665948s19.199677-42.665948 42.665948-42.665948h544.647898L792.989787 371.449918a42.77688 42.77688 0 0 1 0-60.329651 42.77688 42.77688 0 0 1 60.329651 0l158.205337 162.770593a42.58915 42.58915 0 0 1 12.356059 32.946646 42.77688 42.77688 0 0 1 0 5.879367 42.58915 42.58915 0 0 1-12.356059 32.955179L853.319438 708.442645a42.77688 42.77688 0 0 1-60.329651 0 42.77688 42.77688 0 0 1 0-60.329651l92.986168-95.674123z" p-id="7586" fill="#db6f6a"></path></svg>
+                    &nbsp;<span @click="quit()">退出账号</span>
+                  </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            <Button shape="circle" class="btns headBtn" @click="topicModal = true">发表辩题</Button>
+            <Modal
+              title="发表辩题"
+              :closable="false"
+              :mask-closable="false"
+              v-model="topicModal"
+              :loading="loading"
+              @on-ok="publish()"
+              @on-cancel="cancel()"
+            >
+              <topic ref="topic"></topic>
+            </Modal>
+          </div>
+          <div v-else>
+            <router-link to="/"><Col span="7" v-if="token"><p class="nav">下载APP</p></Col></router-link>
+            <router-link to="/log">
+              <Button shape="circle" class="btns headBtn">登录</Button>
+            </router-link>
+          </div>
+        </Col>
+      </Row>
