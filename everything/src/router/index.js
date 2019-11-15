@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { catalogs } from '../libs/api';
 
 import index from '@/views/index'
 import home from '@/views/home'
@@ -24,22 +25,22 @@ export default new Router({
         {
           path: 'hot',
           name: 'Hot',
-          component: () => import('@/components/Hot')
+          component: () => import('@/views/catalogs/hot')
         },
         {
           path: 'social',
           name: 'Social',
-          component: () => import('@/components/Social')
+          component: () => import('@/views/catalogs/social')
         },
         {
           path: 'emotion',
           name: 'Emotion',
-          component: () => import('@/components/emotion')
+          component: () => import('@/views/catalogs/emotion')
         },
         {
           path: 'other',
           name: 'Other',
-          component: () => import('@/components/other')
+          component: () => import('@/views/catalogs/other')
         }
       ]
     },

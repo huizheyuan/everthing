@@ -1,25 +1,28 @@
 <template>
-    <div class="log-reg">
-        <h1>登录</h1>
-        <Form method="post" enctype="multipart/form-data" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-            <FormItem label="手机号" prop="tel">
-                <Input v-model="formValidate.tel" placeholder="请输入手机号"></Input>
-            </FormItem>
-            <FormItem label="密码" prop="passwd">
-                <Input type="password" v-model="formValidate.passwd" placeholder="请输入密码"></Input>
-            </FormItem>
-            <FormItem label="记住密码">
-                <i-switch v-model="formValidate.switch" size="large">
-                    <span slot="open">记住</span>
-                    <span slot="close">关</span>
-                </i-switch>
-                <a href="#" style="float: right">登录遇到问题？</a>
-            </FormItem>
-            <FormItem>
-                <Button class="btns" long @click="login('formValidate')">登录</Button>
-                <router-link to="/reg" class="gogogo">还没账号，去注册~</router-link>
-            </FormItem>
-        </Form>
+    <div>
+        <router-link to="/"><router-link to="/"><div class="logoPosition"></div></router-link></router-link>
+        <div class="log-reg">
+            <h1>登录</h1>
+            <Form method="post" enctype="multipart/form-data" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+                <FormItem label="手机号" prop="tel">
+                    <Input v-model="formValidate.tel" placeholder="请输入手机号"></Input>
+                </FormItem>
+                <FormItem label="密码" prop="passwd">
+                    <Input type="password" v-model="formValidate.passwd" placeholder="请输入密码"></Input>
+                </FormItem>
+                <FormItem label="记住密码">
+                    <i-switch v-model="formValidate.switch" size="large">
+                        <span slot="open">记住</span>
+                        <span slot="close">关</span>
+                    </i-switch>
+                    <a href="#" style="float: right">登录遇到问题？</a>
+                </FormItem>
+                <FormItem>
+                    <Button class="btns" long @click="login('formValidate')">登录</Button>
+                    <router-link to="/reg" class="gogogo">还没账号，去注册~</router-link>
+                </FormItem>
+            </Form>
+        </div>
     </div>
 </template>
 

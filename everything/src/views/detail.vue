@@ -116,7 +116,7 @@ export default {
 </script>
 
 <style scoped>
-.res{margin: 100px auto 0;}
+.res{margin: 50px auto 0;}
 .publish{
     position: absolute;
     right: 100px;

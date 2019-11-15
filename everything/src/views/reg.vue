@@ -1,25 +1,28 @@
 <template>
-    <div class="log-reg">
-        <h1>注册</h1>
-        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-            <FormItem label="手机号" prop="tel">
-                <Input v-model="formValidate.tel" placeholder="请输入手机号"></Input>
-            </FormItem>
-            <FormItem label="密码" prop="passwd">
-                <Input type="password" v-model="formValidate.passwd" placeholder="请输入6-8位数字或字母"></Input>
-            </FormItem>
-            <FormItem label="确认密码" prop="passwdCheck">
-                <Input type="password" v-model="formValidate.passwdCheck" placeholder="确认密码"></Input>
-            </FormItem>
-            <FormItem label="验证码" prop="code">
-                <Input type="text" style="width: 65%;" v-model="formValidate.code"></Input>
-                <Button style="float: right" class="btns" @click="sendCode(formValidate.tel2)">发送验证码</Button>
-            </FormItem>
-            <FormItem>
-                <Button class="btns" @click="reg('formValidate')" long>注册</Button>
-                <router-link to="/login" class="gogogo">已有账号，去登录~</router-link>
-            </FormItem>
-        </Form>
+    <div>
+        <router-link to="/"><div class="logoPosition"></div></router-link>
+        <div class="log-reg">
+            <h1>注册</h1>
+            <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+                <FormItem label="手机号" prop="tel">
+                    <Input v-model="formValidate.tel" placeholder="请输入手机号"></Input>
+                </FormItem>
+                <FormItem label="密码" prop="passwd">
+                    <Input type="password" v-model="formValidate.passwd" placeholder="请输入6-8位数字或字母"></Input>
+                </FormItem>
+                <FormItem label="确认密码" prop="passwdCheck">
+                    <Input type="password" v-model="formValidate.passwdCheck" placeholder="确认密码"></Input>
+                </FormItem>
+                <FormItem label="验证码" prop="code">
+                    <Input type="text" style="width: 65%;" v-model="formValidate.code"></Input>
+                    <Button style="float: right" class="btns" @click="sendCode(formValidate.tel2)">发送验证码</Button>
+                </FormItem>
+                <FormItem>
+                    <Button class="btns" @click="reg('formValidate')" long>注册</Button>
+                    <router-link to="/login" class="gogogo">已有账号，去登录~</router-link>
+                </FormItem>
+            </Form>
+        </div>
     </div>
 </template>
 

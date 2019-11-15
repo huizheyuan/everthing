@@ -4,14 +4,15 @@
       <router-view/>
     </div>
     <div v-else>
-      <Head/>
+      <head-nav></head-nav>
+      <router-link to="/"><div class="logoPosition"></div></router-link>
       <router-view/>
     </div>
   </div>
 </template>
 
 <script>
-import Head from '@/components/head'
+import HeadNav from '@/components/head-nav'
 import { getToken, getUserInfo } from '@/libs/user'
 export default {
   name: 'App',
@@ -25,7 +26,7 @@ export default {
       userInfo: localStorage.user
     }
   },
-  components: { Head },
+  components: { HeadNav },
   created() {
     getUserInfo(getToken()).then(res=>{
       localStorage.user = JSON.stringify(res.data.userInfo);

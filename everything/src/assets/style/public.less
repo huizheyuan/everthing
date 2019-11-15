@@ -11,14 +11,25 @@ a { text-decoration:none; }
 a:hover { text-decoration:underline; cursor: pointer; } 
 sup { vertical-align:text-top; } 
 sub{ vertical-align:text-bottom; } 
-legend { color:#000; } 
+legend { color: @default-font-color; } 
 fieldset, img { border:0; } 
 button, input, select, textarea { font-size:100%; } 
 table { border-collapse:collapse; border-spacing:0; }
 
 a{ color: @primary-color; }
-a:hover{ color: @primary-color; }
+a:hover{ color: @primary-color-hover; }
+.pointer{cursor: pointer;}
+.cursor{cursor: default;}
 
+.logoPosition{
+    background: url('../img/logo.jpg');
+    background-size: cover;
+    position: fixed;
+    float: left;
+    width: 80px;
+    height: 80px;
+    margin: 35px 60px;
+}
 // 登录注册
 .log-reg {
     background: url('../img/log-reg.jpg');
