@@ -6,6 +6,10 @@ router.get('/', async ctx=>{
   ctx.body = 'content';
 });
 
+router.get('/tags', async ctx=>{
+  ctx.body=await ctx.db.query('SELECT topic FROM topic_table where hot=?', [1]);
+});
+
 router.get('/catalog', async ctx=>{
   ctx.body=await ctx.db.query("SELECT * FROM catalog_table");
 });
