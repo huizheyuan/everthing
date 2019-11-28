@@ -187,7 +187,7 @@ export default {
                     if(res.data.code==0){
                         alert(res.data.msg);
                         sessionStorage.removeItem('user');
-                        this.$router.push({path: '/main'});
+                        this.$router.push({path: '/home'});
                     }else if(res.data.code==1){
                         alert(res.data.msg);
                     }

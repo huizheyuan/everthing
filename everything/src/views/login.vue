@@ -91,7 +91,7 @@ export default {
                             localStorage.token=res.data.token;
                             bus.$emit('token', res.data.token);
                             alert(res.data.msg);
-                            this.$router.push({path: '/main'});
+                            this.$router.push({path: '/home'});
                             this.$refs[logVal].resetFields();
                         }else if(res.data.code==1){
                             alert(res.data.msg);

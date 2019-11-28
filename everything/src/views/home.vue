@@ -14,14 +14,17 @@
         <!-- 在这里引入userInfo组件 -->
         <section class="content">
             <router-view></router-view>
+            <User/>
         </section>
     </div>
 </template>
 
 <script>
 import {SERVER} from '@/config';
+import User from '@/components/user'
 export default {
     name: 'home',
+    components: { User },
     data() {
         return {
             catalogs: [],//推荐分类
@@ -52,7 +55,8 @@ export default {
         }
     }
     .content{
-        width: 65%;
+        // width: 65%;
+        display: flex;
     }
 }
 </style>

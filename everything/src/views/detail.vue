@@ -15,7 +15,7 @@
                 </Col>
             </Row>
             <div v-if="!token" class="publish">
-                <router-link to="/log">
+                <router-link to="/login">
                     <Button shape="circle" style="margin: 8px 24px; width: 100px;height: 40px" class="btns">立即登录</Button>
                 </router-link>
                 <p style="margin: 8px 24px; font-size: 14px; color: #00b7a3">&nbsp;登录后就可以参与讨论啦~</p>
@@ -46,13 +46,31 @@
                 <!-- 正方 -->
                 <Col span="6">
                     <p class="dialog" style="background-color: rgb(212, 211, 211);">
-                        立论、驳论、提问
+                        立论、驳论、提问</br>
                     </p>
                 </Col>
                 <!-- 反方 -->
                 <Col span="6">
                     <p class="dialog" style="background-color: rgb(212, 211, 211);">
-                        立论、驳论、提问
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br> 立论、驳论、提问</br>
+                        lalallalalalal
                     </p>
                 </Col>
             </Row>
@@ -151,7 +169,6 @@ article.b{
 .content{
     height: 60vh;
     overflow-y: scroll;
-    overflow:hidden;
 }
 .dialog{
     margin: 20px;

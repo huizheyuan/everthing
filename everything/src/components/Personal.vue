@@ -71,7 +71,7 @@
 import { mapActions, mapMutations } from 'vuex';
 import {SERVER} from '@/config';
 export default {
-    name: 'Personal',
+    name: 'personal',
     inject: ['app'],
     data () {
         const validateTel = (rule, value, callback) => {

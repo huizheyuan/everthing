@@ -5,7 +5,9 @@
     </div>
     <div v-else>
       <head-nav></head-nav>
-      <router-link to="/"><div class="logoPosition"></div></router-link>
+      <router-link to="/">
+        <div class="logoPosition"></div>
+      </router-link>
       <router-view/>
     </div>
   </div>

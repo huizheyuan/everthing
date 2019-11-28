@@ -6,7 +6,6 @@
       label-position="right"
       :rules="topicValidate"
       :model="topicData"
-      ref="topicForm"
     >
       <FormItem label="辩题" prop="topic">
         <Input class="full" v-model="topicData.topic" placeholder="辩题"></Input>
@@ -22,7 +21,6 @@
           <option v-for="item in catalogs" :key="item.id" :value="item.id">{{item.title}}</option>
         </Select>
       </FormItem>
-      <!-- <p v-for="item in catalogs" :key="item.id" :value="item.id">{{item.title}}</p> -->
     </Form>
   </div>
 </template>

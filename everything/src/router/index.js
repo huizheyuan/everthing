@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { catalogs } from '../libs/api';
 
 import index from '@/views/index'
 import home from '@/views/home'
@@ -53,12 +52,12 @@ export default new Router({
         {
           path: 'personal',
           name: 'Personal',
-          component: () => import('@/components/Personal')
+          component: () => import('@/components/personal')
         },
         {
           path: 'setting',
           name: 'Setting',
-          component: () => import('@/components/Setting')
+          component: () => import('@/components/setting')
         }
       ]
     },
