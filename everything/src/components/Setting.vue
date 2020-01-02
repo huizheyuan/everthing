@@ -9,7 +9,7 @@
                                 <Input style="width: 81%" type="password" v-model="opwdForm.passwd" placeholder="请输入密码"></Input>
                             </FormItem>
                             <FormItem>
-                                <Button class="btns" style="width: 40%" @click="modifyPwd(opwdForm.passwd)" long>下一步</Button>
+                                <Button type="warning" ghost shape="circle" style="width: 40%" @click="modifyPwd(opwdForm.passwd)" long>下一步</Button>
                                 <a @click="choice=2">用手机验证</a>
                             </FormItem>
                         </Form>
@@ -24,7 +24,7 @@
                                 <Button @click="telSendCode(telForm.modifyTel)">发送验证码</Button>
                             </FormItem>
                             <FormItem>
-                                <Button class="btns" style="width: 40%" @click="verifyTel('modifyPwd2')" long>下一步</Button>
+                                <Button type="warning" ghost shape="circle" style="width: 40%" @click="verifyTel('modifyPwd2')" long>下一步</Button>
                                 <a @click="choice=1">用密码验证</a>
                             </FormItem>
                         </Form>
@@ -39,8 +39,8 @@
                             <Input style="width: 81%" type="password" v-model="newForm.newPwdCheck" placeholder="确认密码"></Input>
                         </FormItem>
                         <FormItem>
-                            <Button class="btns" style="width: 40%" @click="steps=1">上一步</Button>
-                            <Button class="btns" style="width: 40%" @click="newPwdFinish('modifyPwdFinish')">完成</Button>
+                            <Button type="warning" ghost shape="circle" style="width: 40%" @click="steps=1">上一步</Button>
+                            <Button type="warning" ghost shape="circle" style="width: 40%" @click="newPwdFinish('modifyPwdFinish')">完成</Button>
                         </FormItem>
                     </Form>
                 </div>
@@ -58,7 +58,7 @@
                     </li>
                     <li>3、删除帐号是不可逆的操作，删除后将无法恢复。</li>
                 </ul>
-                <button href="#" class="btns cancel" @click="cancelAccount()">注销账号</button>
+                <Button type="warning" ghost shape="circle" size="large" @click="cancelAccount()">注销账号</Button>
             </TabPane>
         </Tabs>
     </div>
@@ -141,7 +141,7 @@ export default {
         modifyPwd(oPwd){
             var pass=/^[a-zA-Z0-9]{6,8}$/;
             if (!pass.test(oPwd)) {
-                alert("请输入6-8位数字或字母");
+                this.$Message.info('请输入6-8位数字或字母');
             }else{
                 // 原始密码验证
                 this.steps=2;// 进入下一步
@@ -151,12 +151,12 @@ export default {
         telSendCode(telNum){
             var tel=/^[1][3,4,5,7,8][0-9]{9}$/;
             if (!telNum){
-                alert("手机号不能为空");
+                this.$Message.info('手机号不能为空');
             } else if (!tel.test(telNum)){
-                alert("手机号格式不正确");
+                this.$Message.info('手机号格式不正确');
             }else{
                 // 根据手机号 发送验证码
-                alert("验证码");
+                this.$Message.info('验证码');
             }
         },
         // 收到手机号&验证码，验证该用户是否注册
@@ -170,9 +170,9 @@ export default {
         newPwdFinish(newPwds){
             this.$refs[newPwds].validate((valid) => {
                 if (valid) {
-                    alert("发送请求，修改密码");
+                    this.$Message.info('发送请求，修改密码');
                 } else {
-                    alert("新密码有误");
+                    this.$Message.info('新密码有误');
                 }
             })
         },
@@ -185,11 +185,11 @@ export default {
                     data: $qs.stringify( {uid: this.newForm.uid} )
                 }).then(res => {
                     if(res.data.code==0){
-                        alert(res.data.msg);
+                        this.$Message.info(res.data.msg);
                         sessionStorage.removeItem('user');
                         this.$router.push({path: '/home'});
                     }else if(res.data.code==1){
-                        alert(res.data.msg);
+                        this.$Message.info(res.data.msg);
                     }
                 }).catch(err => {
                     console.log('出错了', err);
@@ -216,11 +216,5 @@ export default {
 .cancelText li{
     font-size: 16px;
     margin: 20px 0;
-}
-.cancel{
-    margin: 18px 0;
-    width: 100px;
-    height: 38px;
-    font-size: 14px;
 }
 </style>

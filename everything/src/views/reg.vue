@@ -15,10 +15,10 @@
                 </FormItem>
                 <FormItem label="验证码" prop="code">
                     <Input type="text" style="width: 65%;" v-model="formValidate.code"></Input>
-                    <Button style="float: right" class="btns" @click="sendCode(formValidate.tel2)">发送验证码</Button>
+                    <Button style="float: right" type="warning" ghost shape="circle" @click="sendCode(formValidate.tel2)">发送验证码</Button>
                 </FormItem>
                 <FormItem>
-                    <Button class="btns" @click="reg('formValidate')" long>注册</Button>
+                    <Button type="warning" ghost shape="circle" @click="reg('formValidate')" long>注册</Button>
                     <router-link to="/login" class="gogogo">已有账号，去登录~</router-link>
                 </FormItem>
             </Form>

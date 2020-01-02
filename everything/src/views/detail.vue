@@ -16,7 +16,7 @@
             </Row>
             <div v-if="!token" class="publish">
                 <router-link to="/login">
-                    <Button shape="circle" style="margin: 8px 24px; width: 100px;height: 40px" class="btns">立即登录</Button>
+                    <Button style="margin: 8px 24px; width: 100px;height: 40px" type="warning" ghost shape="circle">立即登录</Button>
                 </router-link>
                 <p style="margin: 8px 24px; font-size: 14px; color: #00b7a3">&nbsp;登录后就可以参与讨论啦~</p>
             </div>
@@ -35,7 +35,7 @@
                 </FormItem>
                 <FormItem>
                     <Button style="margin-left: 8px; border-radius: 22px;" @click="handleReset('formValidate')">重写</Button>
-                    <Button class="btns" type="primary" @click="handleSubmit('formValidate')">发表</Button>
+                    <Button type="warning" ghost shape="circle" @click="handleSubmit('formValidate')">发表</Button>
                 </FormItem>
             </Form>
             <!-- 背景图 -->

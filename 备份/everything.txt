@@ -99,7 +99,8 @@ formatList (list) {
 
 
 
-
+@click="active=item.menuName" 
+:class="active===item.menuName?'active':''" 
 
 
 <Row :gutter="16">

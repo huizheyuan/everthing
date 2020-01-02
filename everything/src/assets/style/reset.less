@@ -1,4 +1,4 @@
-// iview组件 样式复写
+// 样式复写
 
 //表单元素
 .ivu-switch-checked{
@@ -9,7 +9,49 @@
     border-color: @primary-color;
     color: @primary-color;
 }
+.ivu-radio-checked .ivu-radio-inner {
+    border-color: @primary-color;
+}
+.ivu-radio-inner:after {
+    background-color: @primary-color;
+}
 //标签加宽
 .ivu-tag-size-large{
     padding: 0 25px;
+}
+
+// Header
+.ivu-layout-header {
+    background: @default-background;
+    .ivu-menu-dark {
+        background: @default-background;
+    }
+}
+
+// 菜单
+.ivu-menu {
+    z-index: 0;
+}
+.ivu-layout-sider{
+    background-color: @primary-white;
+}
+.ivu-menu-vertical .ivu-menu-item:hover, .ivu-menu-vertical .ivu-menu-submenu-title:hover {
+    color: #555555;
+}
+.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu) {
+    color: #555555;
+    background: rgb(247, 231, 178);
+}
+.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu):after {
+    background: @primary-color;
+}
+// Tab
+.ivu-tabs-ink-bar {
+    background-color: @primary-color;
+}
+.ivu-tabs-nav .ivu-tabs-tab-active {
+    color: @primary-color;
+}
+.ivu-tabs-nav .ivu-tabs-tab:hover {
+    color: @primary-color;
 }

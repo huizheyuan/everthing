@@ -5,6 +5,7 @@ import index from '@/views/index'
 import home from '@/views/home'
 import mine from '@/views/mine'
 import detail from '@/views/detail'
+import msg from '@/views/msg'
 
 Vue.use(Router)
 
@@ -24,7 +25,7 @@ export default new Router({
         {
           path: 'hot',
           name: 'Hot',
-          component: () => import('@/views/catalogs/hot')
+          component: () => import('@/views/catalogs/debate-list')
         },
         {
           path: 'social',
@@ -42,6 +43,11 @@ export default new Router({
           component: () => import('@/views/catalogs/other')
         }
       ]
+    },
+    {
+      path: '/msg',
+      name: 'msg',
+      component: msg
     },
     {
       path: '/mine',

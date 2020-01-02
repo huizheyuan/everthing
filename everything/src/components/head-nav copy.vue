@@ -11,33 +11,26 @@
         </ul>
       </Col>
       <Col :xs="{ span: 3 }" :lg="{ span: 4 }">
-        <Input search @on-search="search"/>
+        <!-- <Input search @on-search="search"/> -->
+        <Input suffix="ios-search" />
       </Col>
       <Col :xs="{ span: 2 }" :lg="{ span: 3 }">
-        <Button type="warning" ghost shape="circle" @click="topicModal = true">发表辩题</Button>
-        <Modal
-          title="发表辩题"
-          :closable="false"
-          :mask-closable="false"
-          v-model="topicModal"
-          :loading="loading"
-          @on-ok="publishTopic()"
-          @on-cancel="cancelTopic()"
-        >
-          <topic ref="topicForm"></topic>
-        </Modal>
+        <launch-topic></launch-topic>
       </Col>
+      <div class="demo-avatar">
+        <Avatar icon="ios-person" size="large" />
+      </div>
     </Row>
   </div>
 </template>
 
 <script>
 import { getToken } from '../libs/user'
-import topic from './topic'
+import LaunchTopic from './launch-topic'
 export default {
   name: 'headNav',
   inject: ['app'],
-  components: { topic },
+  components: { LaunchTopic },
   data () {
     return {
       token: getToken(),
@@ -53,23 +46,23 @@ export default {
   methods: {
     search() { alert("s"); },
     publishTopic() {
-      let mForm = this.$refs.topicForm.topicData
-      mForm.validate((valid) => {
-        if (valid) {
-          // 发表观点
-          this.$axios({
-              // url: SERVER + 'user/publish',
-              method: 'post',
-              data: $qs.stringify(mForm)
-          }).then(res => {
-              this.$Message.success('发表成功!');
-          }).catch(err => {
-              console.log(err);
-          })
-        } else {
-          this.$Message.error('有必填项未填');
-        }
-      })
+      // let mForm = this.$refs.topicForm.topicData
+      // mForm.validate((valid) => {
+      //   console.info("ddd")
+      //   if (valid) {
+      //     this.$axios({
+      //         url: SERVER + 'user/publish',
+      //         method: 'post',
+      //         data: $qs.stringify(mForm)
+      //     }).then(res => {
+      //         this.$Message.success('发表成功!');
+      //     }).catch(err => {
+      //         console.log(err);
+      //     })
+      //   } else {
+      //     this.$Message.error('有必填项未填');
+      //   }
+      // })
       
       // this.$axios({
       //     url: SERVER + 'user/publish',
@@ -81,24 +74,25 @@ export default {
       //     console.log(err);
       // })
     },
-    cancelTopic() {
-      this.$refs.topicForm.topicData={}
-    }
   },
 }
 </script>
 
 <style lang="less" scoped>
+@import '~@/assets/style/theme.less';
+
 .headNav{
-  // background-color: @default-background;
-  background-color: #3E3E3B;
-  box-shadow: 0 6px 8px #888888;
+  background-color: @default-background;
+  box-shadow: 0 2px 8px #888888;
   .menus{
     li{
       margin: 10px 0;
       padding: 10px  20px;
       float: left;
       font-size: 18px;
+      a {
+        color: @primary-white;
+      }
     }
   }
   .ivu-col{

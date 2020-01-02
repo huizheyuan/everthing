@@ -18,7 +18,7 @@
                     <a href="#" style="float: right">登录遇到问题？</a>
                 </FormItem>
                 <FormItem>
-                    <Button class="btns" long @click="login('formValidate')">登录</Button>
+                    <Button type="warning" ghost shape="circle" long @click="login('formValidate')">登录</Button>
                     <router-link to="/reg" class="gogogo">还没账号，去注册~</router-link>
                 </FormItem>
             </Form>
